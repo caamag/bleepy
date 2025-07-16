@@ -1,3 +1,4 @@
+import { useAuthenticate } from "@/src/hooks/useAuth";
 import { isEmailValid } from "@/src/utils/isValidEmail";
 import { useState } from "react";
 import * as _ from "react-native";
@@ -10,11 +11,12 @@ interface ModalProps {
 }
 
 const LoginModal = ({ onClose }: ModalProps) => {
+  const { handleLogin } = useAuthenticate();
   const [email, setEmail] = useState<string>("");
   const [pass, setPass] = useState<string>("");
   const [checked, setChecked] = useState<boolean>(false);
 
-  const handleLogin = () => {
+  const handleSubmit = async () => {
     if (email === "" || pass === "") {
       Toast.show({
         type: "error",
@@ -32,7 +34,7 @@ const LoginModal = ({ onClose }: ModalProps) => {
       });
     }
 
-    console.log("Login efetuado");
+    await handleLogin(email, pass);
   };
 
   return (
@@ -80,7 +82,7 @@ const LoginModal = ({ onClose }: ModalProps) => {
           <_.Text style={{ marginLeft: 5 }}>Lembrar senha</_.Text>
         </_.View>
 
-        <_.TouchableOpacity style={styles.submitButton} onPress={handleLogin}>
+        <_.TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
           <_.Text style={{ color: "white", textAlign: "center" }}>
             Entrar
           </_.Text>

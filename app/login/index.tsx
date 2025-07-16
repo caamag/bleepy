@@ -1,4 +1,3 @@
-import { useRouter } from "expo-router";
 import { useState } from "react";
 import * as _ from "react-native";
 import { styles } from "./style";
@@ -8,7 +7,6 @@ import LoginModal from "@/src/components/login";
 import RegisterModal from "@/src/components/register";
 
 const Login = () => {
-  const router = useRouter();
   const [modalOpen, setModalOpen] = useState<"login" | "register" | undefined>(
     undefined
   );

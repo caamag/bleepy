@@ -1,19 +1,25 @@
+import { useAuth } from "@/src/context/auth";
 import { useRouter } from "expo-router";
-import { Button, Text, View } from "react-native";
+import { useEffect } from "react";
+import { Text, View } from "react-native";
 
-export default function Index() {
+const Index = () => {
+  const { user, loading } = useAuth();
   const router = useRouter();
 
-  return (
-    <View>
-      <Button
-        title="Ir para login"
-        onPress={() => {
-          router.push("/login");
-        }}
-      />
+  useEffect(() => {
+    if (!loading && !user) {
+      router.replace("/login");
+    }
+  }, [loading, user]);
 
-      <Text>Tela inicial</Text>
-    </View>
-  );
-}
+  if (!loading) {
+    return (
+      <View>
+        <Text>Home</Text>
+      </View>
+    );
+  }
+};
+
+export default Index;

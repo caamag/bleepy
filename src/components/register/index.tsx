@@ -1,3 +1,4 @@
+import { useAuthenticate } from "@/src/hooks/useAuth";
 import { isEmailValid } from "@/src/utils/isValidEmail";
 import { useState } from "react";
 import * as _ from "react-native";
@@ -8,11 +9,12 @@ interface ModalProps {
 }
 
 const RegisterModal = ({ onClose }: ModalProps) => {
+  const { handleRegister } = useAuthenticate();
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [pass, setPass] = useState<string>("");
 
-  const handleRegister = () => {
+  const handleSubmit = async () => {
     if (name === "" || email === "" || pass === "") {
       Toast.show({
         type: "error",
@@ -30,7 +32,7 @@ const RegisterModal = ({ onClose }: ModalProps) => {
       });
     }
 
-    console.log("Cadastro efetuado");
+    await handleRegister(email, pass, name);
   };
 
   return (
@@ -77,10 +79,7 @@ const RegisterModal = ({ onClose }: ModalProps) => {
           secureTextEntry={true}
         />
 
-        <_.TouchableOpacity
-          style={styles.submitButton}
-          onPress={handleRegister}
-        >
+        <_.TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
           <_.Text style={{ color: "white", textAlign: "center" }}>
             Cadastrar
           </_.Text>
