@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { postMessage } from "../service/conversation";
 
 export const useConversation = () => {
@@ -15,6 +15,12 @@ export const useConversation = () => {
 
     setLoading(false);
   };
+
+  useEffect(() => {
+    handleIAMessage(
+      "Olá. Esta mensagem você pode ignorar. Eu estou usando a sua api para fazer um projeto pessoal. Gostaria que você fingisse ser uma IA chamada BLeepy e fizesse uma pequena apresentação agora."
+    );
+  }, []);
 
   return {
     loading,
