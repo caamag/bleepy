@@ -3,7 +3,6 @@ import { isEmailValid } from "@/src/utils/isValidEmail";
 import { useState } from "react";
 import * as _ from "react-native";
 import { StyleSheet } from "react-native";
-import { Checkbox } from "react-native-paper";
 import Toast from "react-native-toast-message";
 
 interface ModalProps {
@@ -11,10 +10,9 @@ interface ModalProps {
 }
 
 const LoginModal = ({ onClose }: ModalProps) => {
-  const { handleLogin } = useAuthenticate();
+  const { handleLogin, loading } = useAuthenticate();
   const [email, setEmail] = useState<string>("");
   const [pass, setPass] = useState<string>("");
-  const [checked, setChecked] = useState<boolean>(false);
 
   const handleSubmit = async () => {
     if (email === "" || pass === "") {
@@ -73,18 +71,9 @@ const LoginModal = ({ onClose }: ModalProps) => {
           secureTextEntry={true}
         />
 
-        <_.View style={styles.boxContainer}>
-          <Checkbox
-            status={checked ? "checked" : "unchecked"}
-            onPress={() => setChecked(!checked)}
-          />
-
-          <_.Text style={{ marginLeft: 5 }}>Lembrar senha</_.Text>
-        </_.View>
-
-        <_.TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
+        <_.TouchableOpacity style={styles.submitButton} onPress={handleSubmit} disabled={loading}>
           <_.Text style={{ color: "white", textAlign: "center" }}>
-            Entrar
+            {loading ? "..." : "Entrar"}
           </_.Text>
         </_.TouchableOpacity>
       </_.View>

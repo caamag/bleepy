@@ -2,6 +2,7 @@ import { useAuth } from "@/src/context/auth";
 import { useRouter } from "expo-router";
 import { useEffect } from "react";
 import { Text, View } from "react-native";
+import { StyleSheet } from "react-native";
 
 const Index = () => {
   const { user, loading } = useAuth();
@@ -15,7 +16,7 @@ const Index = () => {
 
   if (!loading) {
     return (
-      <View>
+      <View style={styles.container}>
         <Text>Home</Text>
       </View>
     );
@@ -23,3 +24,10 @@ const Index = () => {
 };
 
 export default Index;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "rgb(60,60,60)",
+  },
+});
